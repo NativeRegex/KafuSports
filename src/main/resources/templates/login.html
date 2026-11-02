@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/layout :: head('Login')}"></head>
+<body>
+
+<nav th:replace="~{fragments/layout :: navbar}"></nav>
+
+<div class="container" style="max-width: 400px;">
+    <div class="card" style="text-align: center;">
+        <h2 style="color: #00FF88; margin-bottom: 20px;">Admin Login</h2>
+        <form th:action="@{/login}" method="post">
+            <input type="text" name="username" placeholder="Username" required style="width: 100%; padding: 12px; margin-bottom: 15px; background: #0D1117; border: 1px solid #30363D; color: white; border-radius: 5px;"><br>
+            <input type="password" name="password" placeholder="Password" required style="width: 100%; padding: 12px; margin-bottom: 20px; background: #0D1117; border: 1px solid #30363D; color: white; border-radius: 5px;"><br>
+            <button type="submit" class="btn" style="width: 100%;">Login</button>
+        </form>
+    </div>
+</div>
+
+<footer th:replace="~{fragments/layout :: footer}"></footer>
+</body>
+</html>

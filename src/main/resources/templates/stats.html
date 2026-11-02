@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/layout :: head('Stats')}"></head>
+<body>
+
+<nav th:replace="~{fragments/layout :: navbar}"></nav>
+
+<div class="container">
+
+    <div class="card" style="margin-bottom: 25px;">
+        <div class="icon-title"><svg th:replace="~{fragments/icons :: chart}" class="icon icon-lg"></svg><h1 style="margin:0;">League Stats</h1></div>
+    </div>
+
+    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 25px;">
+        <div class="card" style="text-align: center; padding: 30px;">
+            <div style="font-family: 'Bebas Neue', sans-serif; font-size: 60px; color: #00FF85;" th:text="${totalGoals}">0</div>
+            <div style="color: #8b949e; font-size: 13px; letter-spacing: 2px;">TOTAL GOALS</div>
+        </div>
+        <div class="card" style="text-align: center; padding: 30px;">
+            <div style="font-family: 'Bebas Neue', sans-serif; font-size: 60px; color: #FFC107;" th:text="${totalMatches}">0</div>
+            <div style="color: #8b949e; font-size: 13px; letter-spacing: 2px;">MATCHES PLAYED</div>
+        </div>
+    </div>
+
+    <div class="card" style="margin-bottom: 25px;">
+        <div class="icon-title" style="margin-bottom:20px;"><svg th:replace="~{fragments/icons :: football}" class="icon"></svg><h2 style="margin:0;">Top Scorers</h2></div>
+        <table>
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Player</th>
+                    <th>Team</th>
+                    <th style="text-align: center;">Goals</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="p, iter : ${topScorers}">
+                    <td style="color: #00FF85; font-weight: bold;" th:text="${iter.count}">1</td>
+                    <td style="font-weight: 600; color: #FFFFFF;" th:text="${p.name}">Player</td>
+                    <td>
+                        <a th:href="@{/teams/{id}(id=${p.team.id})}" style="color: #00FF85; text-decoration: none;" th:text="${p.team.name}">Team</a>
+                    </td>
+                    <td style="text-align: center; font-family: 'Bebas Neue', sans-serif; font-size: 22px; color: #FFC107;" th:text="${p.goals}">0</td>
+                </tr>
+                <tr th:if="${#lists.isEmpty(topScorers)}">
+                    <td colspan="4" style="text-align: center; padding: 40px; color: #8b949e;">No goals recorded yet.</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="card">
+        <div class="icon-title" style="margin-bottom:20px;"><svg th:replace="~{fragments/icons :: trophy}" class="icon"></svg><h2 style="margin:0;">Team Rankings</h2></div>
+        <div style="overflow-x: auto;">
+        <table style="min-width: 700px;">
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Team</th>
+                    <th style="text-align: center;">P</th>
+                    <th style="text-align: center;">W</th>
+                    <th style="text-align: center;">D</th>
+                    <th style="text-align: center;">L</th>
+                    <th style="text-align: center;">GD</th>
+                    <th style="text-align: center;">Pts</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="team, iter : ${teams}">
+                    <td style="color: #00FF85; font-weight: bold;" th:text="${iter.count}">1</td>
+                    <td><a th:href="@{/teams/{id}(id=${team.id})}" style="color: #FFFFFF; text-decoration: none; font-weight: 600;" th:text="${team.name}">Team</a></td>
+                    <td style="text-align: center;" th:text="${team.played}">0</td>
+                    <td style="text-align: center; color: #00FF85;" th:text="${team.wins}">0</td>
+                    <td style="text-align: center; color: #C9D1D9;" th:text="${team.draws}">0</td>
+                    <td style="text-align: center; color: #ff7b72;" th:text="${team.losses}">0</td>
+                    <td style="text-align: center; font-weight: bold;"
+                        th:style="${team.goalDifference > 0} ? 'color: #00FF85;' : (${team.goalDifference < 0} ? 'color: #ff7b72;' : 'color: #C9D1D9;')"
+                        th:text="${team.goalDifference > 0} ? '+' + ${team.goalDifference} : ${team.goalDifference}">0</td>
+                    <td style="text-align: center; font-weight: bold; color: #FFC107;" th:text="${team.points}">0</td>
+                </tr>
+            </tbody>
+        </table>
+        </div>
+    </div>
+
+</div>
+
+<footer th:replace="~{fragments/layout :: footer}"></footer>
+</body>
+</html>

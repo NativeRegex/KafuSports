@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/layout :: head('Manage Players')}"></head>
+<body>
+
+<nav th:replace="~{fragments/layout :: navbar}"></nav>
+
+<div class="container">
+    <div class="card">
+        <h1>👥 Manage Players</h1>
+        <p style="margin: 15px 0 30px; color: #8b949e;">Add players to teams.</p>
+
+        <form th:action="@{/admin/players/add}" method="post"
+              style="display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 30px;">
+            <input type="text" name="name" placeholder="Player Name" required
+                   style="flex: 1; min-width: 200px; padding: 12px; background: #0D1117; border: 1px solid #30363D; color: white; border-radius: 5px;">
+            <select name="teamId" required
+                    style="padding: 12px; background: #0D1117; border: 1px solid #30363D; color: white; border-radius: 5px;">
+                <option value="">Select Team</option>
+                <option th:each="t : ${teams}" th:value="${t.id}" th:text="${t.name}"></option>
+            </select>
+            <select name="position" required
+                    style="padding: 12px; background: #0D1117; border: 1px solid #30363D; color: white; border-radius: 5px;">
+                <option value="GK">GK</option>
+                <option value="DEF">DEF</option>
+                <option value="MID">MID</option>
+                <option value="FWD">FWD</option>
+            </select>
+            <input type="number" name="jerseyNumber" placeholder="#" min="1" max="99" required
+                   style="width: 80px; padding: 12px; background: #0D1117; border: 1px solid #30363D; color: white; border-radius: 5px;">
+            <button type="submit" class="btn">Add Player</button>
+        </form>
+
+        <h2 style="margin-bottom: 20px;">All Players</h2>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Player</th>
+                    <th>Team</th>
+                    <th>Position</th>
+                    <th style="text-align: center;">Goals</th>
+                    <th style="text-align: right;">Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="p : ${players}">
+                    <td style="color: #00FF85; font-weight: bold;" th:text="${p.jerseyNumber}">0</td>
+                    <td style="font-weight: 600; color: #FFFFFF;" th:text="${p.name}">Player</td>
+                    <td th:text="${p.team.name}">Team</td>
+                    <td style="color: #8b949e;" th:text="${p.position}">POS</td>
+                    <td style="text-align: center; color: #FFC107;" th:text="${p.goals}">0</td>
+                    <td style="text-align: right;">
+                        <a th:href="@{/admin/players/delete/{id}(id=${p.id})}"
+                           style="color: #ff7b72; text-decoration: none;"
+                           onclick="return confirm('Delete this player?');">Delete</a>
+                    </td>
+                </tr>
+                <tr th:if="${#lists.isEmpty(players)}">
+                    <td colspan="6" style="text-align: center; padding: 40px; color: #8b949e;">No players added yet.</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <p style="margin-top: 30px;"><a th:href="@{/admin}" style="color: #00FF85;">← Back to Admin</a></p>
+    </div>
+</div>
+
+<footer th:replace="~{fragments/layout :: footer}"></footer>
+</body>
+</html>

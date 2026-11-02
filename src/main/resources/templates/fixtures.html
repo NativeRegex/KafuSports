@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/layout :: head('Fixtures')}"></head>
+<body>
+
+<nav th:replace="~{fragments/layout :: navbar}"></nav>
+
+<div class="container">
+    <div class="card">
+        <h1 style="color: #00FF88; margin-bottom: 20px;">📅 KAFU Fixtures</h1>
+        <p style="margin-bottom: 30px; color: #8b949e;">Upcoming matches in the KAFU League.</p>
+
+        <table style="width: 100%; border-collapse: collapse; background: #0D1117; border-radius: 8px;">
+            <thead style="background: #161B22;">
+                <tr>
+                    <th style="padding: 15px; text-align: left; color: #00FF88;">Date</th>
+                    <th style="padding: 15px; text-align: left; color: #00FF88;">Match</th>
+                    <th style="padding: 15px; text-align: left; color: #00FF88;">Venue</th>
+                    <th style="padding: 15px; text-align: center; color: #00FF88;">Status</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="f : ${fixtures}" style="border-top: 1px solid #30363D;">
+                    <td style="padding: 15px;" th:text="${#temporals.format(f.matchDate, 'dd MMM yyyy HH:mm')}">Date</td>
+                    <td style="padding: 15px;">
+                        <span th:text="${f.homeTeam.name}">Home</span> vs <span th:text="${f.awayTeam.name}">Away</span>
+                    </td>
+                    <td style="padding: 15px;" th:text="${f.venue}">Venue</td>
+                    <td style="padding: 15px; text-align: center;" th:text="${f.status}">Status</td>
+                </tr>
+                <tr th:if="${#lists.isEmpty(fixtures)}">
+                    <td colspan="4" style="padding: 30px; text-align: center; color: #8b949e;">No fixtures scheduled yet.</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<footer th:replace="~{fragments/layout :: footer}"></footer>
+</body>
+</html>

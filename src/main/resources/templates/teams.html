@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/layout :: head('Teams')}"></head>
+<body>
+
+<nav th:replace="~{fragments/layout :: navbar}"></nav>
+
+<div class="container">
+    <div class="card">
+        <div class="icon-title"><svg th:replace="~{fragments/icons :: jersey}" class="icon icon-lg"></svg><h1 style="margin:0;">KAFU Teams</h1></div>
+        <p style="margin: 15px 0 30px; color: #8b949e;">All clubs in the KAFU League. Click a team to see their squad.</p>
+
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 20px;">
+            <a th:each="team : ${teams}" th:href="@{/teams/{id}(id=${team.id})}"
+               style="text-decoration: none; color: inherit;">
+                <div style="background: #0D1117; padding: 25px; border: 1px solid #30363D; border-radius: 10px;
+                            transition: all 0.3s ease; text-align: center;"
+                     onmouseover="this.style.borderColor='#00FF85'; this.style.transform='translateY(-4px)';"
+                     onmouseout="this.style.borderColor='#30363D'; this.style.transform='translateY(0)';">
+                    <svg th:replace="~{fragments/icons :: football}" class="icon icon-lg" style="margin-bottom: 10px;"></svg>
+                    <h2 style="color: #00FF85; font-size: 20px; margin-bottom: 8px;" th:text="${team.name}">Team</h2>
+                    <p style="color: #8b949e; font-size: 13px; margin-bottom: 15px;" th:text="${team.sport}">Sport</p>
+                    <div style="display: flex; justify-content: center; gap: 20px;">
+                        <div><div style="color: #FFC107; font-weight: bold;" th:text="${team.points}">0</div><div style="color: #8b949e; font-size: 11px;">PTS</div></div>
+                        <div><div style="color: #00FF85; font-weight: bold;" th:text="${team.wins}">0</div><div style="color: #8b949e; font-size: 11px;">W</div></div>
+                        <div><div style="color: #C9D1D9; font-weight: bold;" th:text="${team.draws}">0</div><div style="color: #8b949e; font-size: 11px;">D</div></div>
+                        <div><div style="color: #ff7b72; font-weight: bold;" th:text="${team.losses}">0</div><div style="color: #8b949e; font-size: 11px;">L</div></div>
+                    </div>
+                </div>
+            </a>
+        </div>
+
+        <div th:if="${#lists.isEmpty(teams)}" style="text-align: center; padding: 40px; color: #8b949e;">
+            No teams added yet.
+        </div>
+    </div>
+</div>
+
+<footer th:replace="~{fragments/layout :: footer}"></footer>
+</body>
+</html>

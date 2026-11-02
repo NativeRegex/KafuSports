@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/layout :: head('Home')}"></head>
+<body>
+
+<nav th:replace="~{fragments/layout :: navbar}"></nav>
+
+<div class="container">
+
+    <!-- HERO -->
+    <div style="display: grid; grid-template-columns: 1.2fr 1fr; gap: 40px; align-items: center; margin-bottom: 40px;">
+
+        <!-- LEFT: Text -->
+        <div>
+            <div class="fade-up" style="display:inline-block; padding:6px 14px; border:1px solid #4DD086; border-radius:50px; font-size:12px; letter-spacing:2px; color:#4DD086; margin-bottom:24px;">
+                OFFICIAL KAFU LEAGUE PORTAL
+            </div>
+            <h1 class="live-heading" style="font-family:'Playfair Display', serif; font-size: 76px; line-height: 1.05; letter-spacing: 3px; margin-bottom: 20px;">
+                THE HOME OF<br>
+                <span style="color:#00FF85; text-shadow:0 0 30px rgba(0,255,133,0.5);">KAFU SPORTS</span>
+            </h1>
+            <p style="font-size:17px; line-height:1.7; color:#8b949e; max-width: 520px; margin-bottom: 32px;">
+                Follow every match, every goal, and every team at Kaimosi Friends University. Live tables, full fixtures, results and player stats — all in one place.
+            </p>
+            <div style="display:flex; gap:14px; flex-wrap:wrap;">
+                <a th:href="@{/league}" class="btn btn-live" style="font-size:14px; padding:16px 28px;">
+                    <i class="fa-solid fa-trophy" style="margin-right:8px;"></i> VIEW LEAGUE TABLE
+                </a>
+                <a th:href="@{/fixtures}" class="btn" style="background: transparent; color: #00FF85; border: 2px solid #00FF85; box-shadow:none; font-size:14px; padding:14px 26px;">
+                    <i class="fa-solid fa-calendar-days" style="margin-right:8px;"></i> FIXTURES
+                </a>
+            </div>
+        </div>
+
+        <!-- RIGHT: Live stats card -->
+        <div class="card fade-up delay-2" style="padding: 32px;">
+            <div style="font-size:12px; letter-spacing:3px; color:#00FF85; margin-bottom: 24px;">
+                LIVE SEASON OVERVIEW
+            </div>
+
+            <div style="display:grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+
+                <div style="text-align:center; padding: 18px; border:1px solid rgba(0,255,133,0.2); border-radius:10px;">
+                    <div style="font-family:'Bebas Neue', sans-serif; font-size: 48px; color:#00FF85; line-height: 1;">
+                        <span class="live-number" th:attr="data-count=${#lists.size(topTeams)}" th:text="${#lists.size(topTeams)}">0</span>
+                    </div>
+                    <div style="font-size:11px; letter-spacing:2px; color:#8b949e; margin-top:6px;">TEAMS</div>
+                </div>
+
+                <div style="text-align:center; padding: 18px; border:1px solid rgba(255,193,7,0.2); border-radius:10px;">
+                    <div style="font-family:'Bebas Neue', sans-serif; font-size: 48px; color:#FFC107; line-height: 1;">
+                        <span class="live-number" th:attr="data-count=${#lists.size(nextFixtures)}" th:text="${#lists.size(nextFixtures)}">0</span>
+                    </div>
+                    <div style="font-size:11px; letter-spacing:2px; color:#8b949e; margin-top:6px;">UPCOMING</div>
+                </div>
+
+                <div style="text-align:center; padding: 18px; border:1px solid rgba(255,255,255,0.1); border-radius:10px;">
+                    <div style="font-family:'Bebas Neue', sans-serif; font-size: 48px; color:#C9D1D9; line-height: 1;">
+                        <span class="live-number" th:attr="data-count=${#lists.size(recentResults)}" th:text="${#lists.size(recentResults)}">0</span>
+                    </div>
+                    <div style="font-size:11px; letter-spacing:2px; color:#8b949e; margin-top:6px;">RESULTS</div>
+                </div>
+
+                <div style="text-align:center; padding: 18px; border:1px solid rgba(255,123,114,0.2); border-radius:10px;">
+                    <div style="font-family:'Bebas Neue', sans-serif; font-size: 48px; color:#ff7b72; line-height: 1;">
+                        2025/26
+                    </div>
+                    <div style="font-size:11px; letter-spacing:2px; color:#8b949e; margin-top:6px;">SEASON</div>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+
+    <!-- THREE-COLUMN DATA ROW -->
+    <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 20px; margin-bottom: 30px;">
+
+        <!-- Next Fixture -->
+        <div class="card live-card" style="padding: 24px;">
+            <div style="display:flex; align-items:center; gap:10px; margin-bottom: 20px;">
+                <i class="fa-solid fa-calendar-days" style="color:#00FF85; font-size:16px;"></i>
+                <span style="font-size:12px; letter-spacing:2px; color:#8b949e;">NEXT FIXTURE</span>
+            </div>
+            <div th:if="${#lists.isEmpty(nextFixtures)}" style="color:#8b949e; text-align:center; padding: 20px;">
+                No upcoming fixtures
+            </div>
+            <div th:each="f, iter : ${nextFixtures}" th:if="${iter.index == 0}">
+                <div style="text-align:center;">
+                    <div style="display:flex; justify-content:space-between; align-items:center; margin: 18px 0;">
+                        <span style="font-weight:600; color:#FFFFFF; font-size:14px;" th:text="${f.homeTeam.name}">Home</span>
+                        <span style="color:#FFC107; font-family:'Bebas Neue', sans-serif; font-size:22px;">VS</span>
+                        <span style="font-weight:600; color:#FFFFFF; font-size:14px;" th:text="${f.awayTeam.name}">Away</span>
+                    </div>
+                    <div style="color:#8b949e; font-size:12px;" th:text="${#temporals.format(f.matchDate, 'EEE dd MMM · HH:mm')}">Date</div>
+                    <div style="color:#00FF85; font-size:12px; margin-top: 6px;" th:text="${f.venue}">Venue</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Latest Result -->
+        <div class="card live-card" style="padding: 24px;">
+            <div style="display:flex; align-items:center; gap:10px; margin-bottom: 20px;">
+                <i class="fa-solid fa-bullhorn" style="color:#FFC107; font-size:16px;"></i>
+                <span style="font-size:12px; letter-spacing:2px; color:#8b949e;">LATEST RESULT</span>
+            </div>
+            <div th:if="${#lists.isEmpty(recentResults)}" style="color:#8b949e; text-align:center; padding: 20px;">
+                No results yet
+            </div>
+            <div th:each="r, iter : ${recentResults}" th:if="${iter.index == 0}">
+                <div style="text-align:center;">
+                    <div style="display:flex; justify-content:space-between; align-items:center; margin: 18px 0;">
+                        <span style="font-weight:600; color:#FFFFFF; font-size:14px;" th:text="${r.homeTeam.name}">Home</span>
+                        <span style="color:#FFC107; font-family:'Bebas Neue', sans-serif; font-size:26px; letter-spacing:2px;"
+                              th:text="${r.homeScore} + ' - ' + ${r.awayScore}">0 - 0</span>
+                        <span style="font-weight:600; color:#FFFFFF; font-size:14px;" th:text="${r.awayTeam.name}">Away</span>
+                    </div>
+                    <div style="color:#8b949e; font-size:12px;" th:text="${#temporals.format(r.matchDate, 'dd MMM yyyy')}">Date</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Top 3 -->
+        <div class="card live-card" style="padding: 24px;">
+            <div style="display:flex; align-items:center; gap:10px; margin-bottom: 20px;">
+                <i class="fa-solid fa-ranking-star" style="color:#00FF85; font-size:16px;"></i>
+                <span style="font-size:12px; letter-spacing:2px; color:#8b949e;">TOP 3</span>
+            </div>
+            <div th:each="team, iter : ${topTeams}" th:if="${iter.index < 3}">
+                <div style="display:flex; justify-content:space-between; align-items:center; padding: 12px 0; border-bottom: 1px solid rgba(255,255,255,0.06);">
+                    <div style="display:flex; align-items:center; gap: 12px;">
+                        <span style="font-family:'Bebas Neue', sans-serif; font-size:22px; color:#00FF85; width:24px;"
+                              th:text="${iter.count}">1</span>
+                        <a th:href="@{/teams/{id}(id=${team.id})}"
+                           style="color:#FFFFFF; text-decoration:none; font-weight:600; font-size:14px;"
+                           th:text="${team.name}">Team</a>
+                    </div>
+                    <span style="color:#FFC107; font-weight:bold;" th:text="${team.points}">0</span>
+                </div>
+            </div>
+            <a th:href="@{/league}" style="display:block; text-align:center; margin-top: 16px; color:#00FF85; text-decoration:none; font-size: 12px; letter-spacing: 2px;">
+                FULL TABLE →
+            </a>
+        </div>
+
+    </div>
+
+</div>
+
+<footer th:replace="~{fragments/layout :: footer}"></footer>
+</body>
+</html>

@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/layout :: head('Results')}"></head>
+<body>
+
+<nav th:replace="~{fragments/layout :: navbar}"></nav>
+
+<div class="container">
+    <div class="card">
+        <div class="icon-title"><svg th:replace="~{fragments/icons :: whistle}" class="icon icon-lg"></svg><h1 style="margin:0;">Match Results</h1></div>
+        <p style="margin: 15px 0 30px; color: #8b949e;">Completed matches in the KAFU League.</p>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>Date</th>
+                    <th style="text-align: center;">Home</th>
+                    <th style="text-align: center;">Score</th>
+                    <th style="text-align: center;">Away</th>
+                    <th>Venue</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="r : ${results}">
+                    <td th:text="${#temporals.format(r.matchDate, 'dd MMM yyyy')}">Date</td>
+                    <td style="text-align: right; font-weight: 600; color: #FFFFFF;" th:text="${r.homeTeam.name}">Home</td>
+                    <td style="text-align: center; font-family: 'Bebas Neue', sans-serif; font-size: 26px; color: #FFC107;"
+                        th:text="${r.homeScore} + ' - ' + ${r.awayScore}">0 - 0</td>
+                    <td style="font-weight: 600; color: #FFFFFF;" th:text="${r.awayTeam.name}">Away</td>
+                    <td th:text="${r.venue}">Venue</td>
+                </tr>
+                <tr th:if="${#lists.isEmpty(results)}">
+                    <td colspan="5" style="text-align: center; padding: 40px; color: #8b949e;">No results recorded yet.</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<footer th:replace="~{fragments/layout :: footer}"></footer>
+</body>
+</html>

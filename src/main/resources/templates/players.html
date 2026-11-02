@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/layout :: head('Players')}"></head>
+<body>
+
+<nav th:replace="~{fragments/layout :: navbar}"></nav>
+
+<div class="container">
+    <div class="card">
+        <div class="icon-title"><svg th:replace="~{fragments/icons :: jersey}" class="icon icon-lg"></svg><h1 style="margin:0;">Players</h1></div>
+        <p style="margin: 15px 0 30px; color: #8b949e;">Top goalscorers across the KAFU League.</p>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Player</th>
+                    <th>Team</th>
+                    <th>Position</th>
+                    <th style="text-align: center;">Goals</th>
+                    <th style="text-align: center;">Assists</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="p, iter : ${topScorers}">
+                    <td style="color: #00FF85; font-weight: bold;" th:text="${iter.count}">1</td>
+                    <td style="font-weight: 600; color: #FFFFFF;" th:text="${p.name}">Player</td>
+                    <td>
+                        <a th:href="@{/teams/{id}(id=${p.team.id})}" style="color: #00FF85; text-decoration: none;" th:text="${p.team.name}">Team</a>
+                    </td>
+                    <td style="color: #8b949e;" th:text="${p.position}">POS</td>
+                    <td style="text-align: center; font-family: 'Bebas Neue', sans-serif; font-size: 22px; color: #FFC107;" th:text="${p.goals}">0</td>
+                    <td style="text-align: center; color: #00FF85;" th:text="${p.assists}">0</td>
+                </tr>
+                <tr th:if="${#lists.isEmpty(topScorers)}">
+                    <td colspan="6" style="text-align: center; padding: 40px; color: #8b949e;">No players added yet.</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<footer th:replace="~{fragments/layout :: footer}"></footer>
+</body>
+</html>

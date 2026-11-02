@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/layout :: head('Manage Fixtures')}"></head>
+<body>
+
+<nav th:replace="~{fragments/layout :: navbar}"></nav>
+
+<div class="container">
+    <div class="card">
+        <h1 style="color: #00FF88; margin-bottom: 20px;">Manage Fixtures</h1>
+        <p style="margin-bottom: 30px;">Schedule matches between KAFU League teams.</p>
+
+        <form th:action="@{/admin/fixtures/add}" method="post" style="display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 30px;">
+            <select name="homeTeamId" required style="padding: 12px; background: #0D1117; border: 1px solid #30363D; color: white; border-radius: 5px;">
+                <option value="">Home Team</option>
+                <option th:each="team : ${teams}" th:value="${team.id}" th:text="${team.name}"></option>
+            </select>
+            <select name="awayTeamId" required style="padding: 12px; background: #0D1117; border: 1px solid #30363D; color: white; border-radius: 5px;">
+                <option value="">Away Team</option>
+                <option th:each="team : ${teams}" th:value="${team.id}" th:text="${team.name}"></option>
+            </select>
+            <input type="datetime-local" name="matchDate" required style="padding: 12px; background: #0D1117; border: 1px solid #30363D; color: white; border-radius: 5px;">
+            <input type="text" name="venue" placeholder="Venue" required style="padding: 12px; background: #0D1117; border: 1px solid #30363D; color: white; border-radius: 5px; flex: 1;">
+            <button type="submit" class="btn">Schedule</button>
+        </form>
+
+        <h2 style="color: #00FF88; margin-bottom: 20px;">Fixtures (<span th:text="${#lists.size(fixtures)}">0</span>)</h2>
+        <table style="width: 100%; border-collapse: collapse; background: #0D1117; border-radius: 8px;">
+            <thead style="background: #161B22;">
+                <tr>
+                    <th style="padding: 15px; text-align: left; color: #00FF88;">Date</th>
+                    <th style="padding: 15px; text-align: left; color: #00FF88;">Match</th>
+                    <th style="padding: 15px; text-align: left; color: #00FF88;">Venue</th>
+                    <th style="padding: 15px; text-align: center; color: #00FF88;">Status</th>
+                    <th style="padding: 15px; text-align: right; color: #00FF88;">Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="f : ${fixtures}" style="border-top: 1px solid #30363D;">
+                    <td style="padding: 15px;" th:text="${#temporals.format(f.matchDate, 'dd MMM yyyy HH:mm')}">Date</td>
+                    <td style="padding: 15px;">
+                        <span th:text="${f.homeTeam.name}">Home</span> vs <span th:text="${f.awayTeam.name}">Away</span>
+                    </td>
+                    <td style="padding: 15px;" th:text="${f.venue}">Venue</td>
+                    <td style="padding: 15px; text-align: center;" th:text="${f.status}">Status</td>
+                    <td style="padding: 15px; text-align: right;">
+                        <a th:href="@{/admin/fixtures/delete/{id}(id=${f.id})}" style="color: #ff7b72; text-decoration: none;" onclick="return confirm('Delete this fixture?')">Delete</a>
+                    </td>
+                </tr>
+                <tr th:if="${#lists.isEmpty(fixtures)}">
+                    <td colspan="5" style="padding: 30px; text-align: center; color: #8b949e;">No fixtures yet. Schedule one above!</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <p style="margin-top: 30px;"><a th:href="@{/admin}" style="color: #00FF88;">← Back to Admin</a></p>
+    </div>
+</div>
+
+<footer th:replace="~{fragments/layout :: footer}"></footer>
+</body>
+</html>

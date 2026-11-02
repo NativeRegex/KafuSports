@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/layout :: head('Admin')}"></head>
+<body>
+
+<nav th:replace="~{fragments/layout :: navbar}"></nav>
+
+<div class="container">
+    <div class="card">
+        <h1>Admin Dashboard</h1>
+        <p style="margin: 15px 0 30px; color: #8b949e;">Manage the KAFU League from here.</p>
+
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 20px;">
+            <div style="background: #0D1117; padding: 25px; border: 1px solid #30363D; border-radius: 10px;">
+                <h2><i class="fa-solid fa-shield-halved" style="color: #00FF85; margin-right: 8px;"></i>Teams</h2>
+                <p style="margin: 10px 0 20px; color: #8b949e;">Add or remove league teams.</p>
+                <a th:href="@{/admin/teams}" class="btn">Manage</a>
+            </div>
+            <div style="background: #0D1117; padding: 25px; border: 1px solid #30363D; border-radius: 10px;">
+                <h2><i class="fa-solid fa-calendar-days" style="color: #00FF85; margin-right: 8px;"></i>Fixtures</h2>
+                <p style="margin: 10px 0 20px; color: #8b949e;">Schedule upcoming matches.</p>
+                <a th:href="@{/admin/fixtures}" class="btn">Manage</a>
+            </div>
+            <div style="background: #0D1117; padding: 25px; border: 1px solid #30363D; border-radius: 10px;">
+                <h2><i class="fa-solid fa-bullhorn" style="color: #FFC107; margin-right: 8px;"></i>Results</h2>
+                <p style="margin: 10px 0 20px; color: #8b949e;">Enter match scores.</p>
+                <a th:href="@{/admin/results}" class="btn">Manage</a>
+            </div>
+            <div style="background: #0D1117; padding: 25px; border: 1px solid #30363D; border-radius: 10px;">
+                <h2><i class="fa-solid fa-users" style="color: #00FF85; margin-right: 8px;"></i>Players</h2>
+                <p style="margin: 10px 0 20px; color: #8b949e;">Add players to teams.</p>
+                <a th:href="@{/admin/players}" class="btn">Manage</a>
+            </div>
+        </div>
+
+        <p style="margin-top: 30px;"><a href="/logout" style="color: #ff7b72;">Logout</a></p>
+    </div>
+</div>
+
+<footer th:replace="~{fragments/layout :: footer}"></footer>
+</body>
+</html>

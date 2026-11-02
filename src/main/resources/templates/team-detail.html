@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/layout :: head(${team.name})}"></head>
+<body>
+
+<nav th:replace="~{fragments/layout :: navbar}"></nav>
+
+<div class="container">
+
+    <div class="card" style="padding: 40px; text-align: center; margin-bottom: 25px;">
+        <div style="font-size: 60px; margin-bottom: 10px;">⚽</div>
+        <h1 th:text="${team.name}">Team Name</h1>
+        <p style="color: #8b949e; margin-top: 8px;" th:text="${team.sport}">Sport</p>
+    </div>
+
+    <div style="display: grid; grid-template-columns: repeat(7, 1fr); gap: 12px; margin-bottom: 25px;">
+        <div class="card" style="text-align: center; padding: 18px;">
+            <div style="font-family: 'Bebas Neue', sans-serif; font-size: 32px; color: #FFC107;" th:text="${team.points}">0</div>
+            <div style="color: #8b949e; font-size: 11px; letter-spacing: 1px;">POINTS</div>
+        </div>
+        <div class="card" style="text-align: center; padding: 18px;">
+            <div style="font-family: 'Bebas Neue', sans-serif; font-size: 32px; color: #C9D1D9;" th:text="${team.played}">0</div>
+            <div style="color: #8b949e; font-size: 11px; letter-spacing: 1px;">PLAYED</div>
+        </div>
+        <div class="card" style="text-align: center; padding: 18px;">
+            <div style="font-family: 'Bebas Neue', sans-serif; font-size: 32px; color: #00FF85;" th:text="${team.wins}">0</div>
+            <div style="color: #8b949e; font-size: 11px; letter-spacing: 1px;">WINS</div>
+        </div>
+        <div class="card" style="text-align: center; padding: 18px;">
+            <div style="font-family: 'Bebas Neue', sans-serif; font-size: 32px; color: #FFC107;" th:text="${team.draws}">0</div>
+            <div style="color: #8b949e; font-size: 11px; letter-spacing: 1px;">DRAWS</div>
+        </div>
+        <div class="card" style="text-align: center; padding: 18px;">
+            <div style="font-family: 'Bebas Neue', sans-serif; font-size: 32px; color: #ff7b72;" th:text="${team.losses}">0</div>
+            <div style="color: #8b949e; font-size: 11px; letter-spacing: 1px;">LOSSES</div>
+        </div>
+        <div class="card" style="text-align: center; padding: 18px;">
+            <div style="font-family: 'Bebas Neue', sans-serif; font-size: 32px; color: #C9D1D9;"
+                 th:text="${team.goalsFor} + '-' + ${team.goalsAgainst}">0-0</div>
+            <div style="color: #8b949e; font-size: 11px; letter-spacing: 1px;">GF-GA</div>
+        </div>
+        <div class="card" style="text-align: center; padding: 18px;">
+            <div style="font-family: 'Bebas Neue', sans-serif; font-size: 32px;"
+                 th:style="${team.goalDifference >= 0} ? 'color: #00FF85;' : 'color: #ff7b72;'"
+                 th:text="${team.goalDifference > 0} ? '+' + ${team.goalDifference} : ${team.goalDifference}">0</div>
+            <div style="color: #8b949e; font-size: 11px; letter-spacing: 1px;">GD</div>
+        </div>
+    </div>
+
+    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 20px;">
+
+        <div class="card" style="padding: 25px;">
+            <h2 style="font-size: 20px; margin-bottom: 15px;">👥 Squad</h2>
+            <div th:if="${#lists.isEmpty(squad)}" style="color: #8b949e; text-align: center; padding: 20px;">
+                No players added yet.
+            </div>
+            <div th:each="p : ${squad}" style="border-bottom: 1px solid rgba(255,255,255,0.1); padding: 10px 0; display: flex; justify-content: space-between;">
+                <div>
+                    <span style="color: #00FF85; font-weight: bold; margin-right: 10px;" th:text="'#' + ${p.jerseyNumber}">#0</span>
+                    <span th:text="${p.name}">Player</span>
+                </div>
+                <span style="color: #8b949e; font-size: 12px;" th:text="${p.position}">POS</span>
+            </div>
+        </div>
+
+        <div class="card" style="padding: 25px;">
+            <h2 style="font-size: 20px; margin-bottom: 15px;">📅 Upcoming Fixtures</h2>
+            <div th:if="${#lists.isEmpty(fixtures)}" style="color: #8b949e; text-align: center; padding: 20px;">
+                No scheduled fixtures.
+            </div>
+            <div th:each="f : ${fixtures}" style="border-bottom: 1px solid rgba(255,255,255,0.1); padding: 12px 0;">
+                <div style="display: flex; justify-content: space-between; align-items: center;">
+                    <span th:text="${f.homeTeam.name}">Home</span>
+                    <span style="font-size: 12px; color: #8b949e;" th:text="${#temporals.format(f.matchDate, 'dd MMM HH:mm')}">Date</span>
+                    <span th:text="${f.awayTeam.name}">Away</span>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="card" style="padding: 25px;">
+        <h2 style="font-size: 20px; margin-bottom: 15px;">⚽ Recent Results</h2>
+        <div th:if="${#lists.isEmpty(results)}" style="color: #8b949e; text-align: center; padding: 20px;">
+            No results yet.
+        </div>
+        <div th:each="r : ${results}" style="border-bottom: 1px solid rgba(255,255,255,0.1); padding: 12px 0;">
+            <div style="display: flex; justify-content: space-between; align-items: center;">
+                <span th:text="${r.homeTeam.name}">Home</span>
+                <span style="font-family: 'Bebas Neue', sans-serif; font-size: 20px; color: #FFC107;"
+                      th:text="${r.homeScore} + ' - ' + ${r.awayScore}">0 - 0</span>
+                <span th:text="${r.awayTeam.name}">Away</span>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<footer th:replace="~{fragments/layout :: footer}"></footer>
+</body>
+</html>
