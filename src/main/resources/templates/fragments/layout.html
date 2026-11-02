@@ -371,14 +371,14 @@
     </a>
     <button class="nav-toggle" id="navToggle" aria-label="Toggle menu">☰</button>
     <div class="nav-links" id="navLinks">
-        <a th:href="@{/}">Home</a>
-        <a th:href="@{/league}">League</a>
-        <a th:href="@{/fixtures}">Fixtures</a>
-        <a th:href="@{/results}">Results</a>
-        <a th:href="@{/teams}">Teams</a>
-        <a th:href="@{/players}">Players</a>
-        <a th:href="@{/stats}">Stats</a>
-        <a th:href="@{/login}">Admin</a>
+        <a th:href="@{/}" onclick="var l=document.getElementById('navLinks');var t=document.getElementById('navToggle');if(l)l.classList.remove('open');if(t)t.textContent='☰';">Home</a>
+        <a th:href="@{/league}" onclick="var l=document.getElementById('navLinks');var t=document.getElementById('navToggle');if(l)l.classList.remove('open');if(t)t.textContent='☰';">League</a>
+        <a th:href="@{/fixtures}" onclick="var l=document.getElementById('navLinks');var t=document.getElementById('navToggle');if(l)l.classList.remove('open');if(t)t.textContent='☰';">Fixtures</a>
+        <a th:href="@{/results}" onclick="var l=document.getElementById('navLinks');var t=document.getElementById('navToggle');if(l)l.classList.remove('open');if(t)t.textContent='☰';">Results</a>
+        <a th:href="@{/teams}" onclick="var l=document.getElementById('navLinks');var t=document.getElementById('navToggle');if(l)l.classList.remove('open');if(t)t.textContent='☰';">Teams</a>
+        <a th:href="@{/players}" onclick="var l=document.getElementById('navLinks');var t=document.getElementById('navToggle');if(l)l.classList.remove('open');if(t)t.textContent='☰';">Players</a>
+        <a th:href="@{/stats}" onclick="var l=document.getElementById('navLinks');var t=document.getElementById('navToggle');if(l)l.classList.remove('open');if(t)t.textContent='☰';">Stats</a>
+        <a th:href="@{/login}" onclick="var l=document.getElementById('navLinks');var t=document.getElementById('navToggle');if(l)l.classList.remove('open');if(t)t.textContent='☰';">Admin</a>
     </div>
 </nav>
 
