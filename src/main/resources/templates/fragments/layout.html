@@ -175,6 +175,30 @@
             color: #FFFFFF;
         }
 
+        /* ---------- Icons (Font Awesome) ---------- */
+        .icon,
+        i.fas, i.far, i.fab, i.fa-solid, i.fa-regular, i.fa-brands {
+            font-size: 1rem !important;
+            width: 1.1em;
+            height: 1.1em;
+            display: inline-block;
+            vertical-align: middle;
+        }
+
+        .icon-lg,
+        .icon-title i {
+            font-size: 1.4rem !important;
+            width: auto;
+            height: auto;
+            margin-right: 10px;
+        }
+
+        .icon-title {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+        }
+
         /* ---------- Tables ---------- */
         .table-wrap {
             overflow-x: auto;
@@ -203,6 +227,38 @@
         }
         tbody tr:hover { background: rgba(77, 208, 134, 0.06); }
         td { padding: 15px; color: #C9D1D9; }
+
+        /* ---------- Login form (always visible) ---------- */
+        .login-form input[type="text"],
+        .login-form input[type="password"] {
+            display: block !important;
+            width: 100% !important;
+            padding: 14px 16px !important;
+            margin-bottom: 14px !important;
+            background: #FFFFFF !important;
+            color: #0A0E14 !important;
+            border: 2px solid #C9A227 !important;
+            border-radius: 8px !important;
+            font-size: 15px !important;
+            font-family: 'Inter', sans-serif !important;
+            visibility: visible !important;
+            opacity: 1 !important;
+            box-sizing: border-box !important;
+        }
+        .login-form button[type="submit"] {
+            display: block !important;
+            width: 100% !important;
+            padding: 14px !important;
+            background: #C9A227 !important;
+            color: #0A0E14 !important;
+            border: none !important;
+            border-radius: 8px !important;
+            font-weight: 800 !important;
+            font-size: 14px !important;
+            letter-spacing: 1.5px !important;
+            text-transform: uppercase !important;
+            cursor: pointer !important;
+        }
 
         /* ---------- Footer ---------- */
         footer {
